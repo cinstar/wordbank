@@ -13,7 +13,7 @@
         "service_worker": "background.js"
     },
     "action": {
-        "default_icon": "wordbank_logo.png"
+        "default_icon": "wordbank_logo7.png"
     },
     "permissions": ["activeTab", "scripting"]
 }
