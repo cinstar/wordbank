@@ -6,16 +6,18 @@
     <link rel="stylesheet" type="text/css" href="styling.css">
   </head>
   <body style="font-family: Montserrat, sans-serif">
-    <h1>WordBank</h1>
+    <h1 style = "display: inline;">WordBank           </h1>
+    <img src = "wordbank_logo7.png" style = "height: 35px; width: 35px; display: inline;">
     <hr />
-    <p id="select-a-word">Welcome to WordBank! Where you can store all your fanciest words</p>
+    <p id="select-a-word">Welcome to WordBank! Where you can store all your fanciest words so you never forget them.</p>
     <div>
-      <h1 style = "font-family: Montserrat, sans-serif" id="definition-word"></h1>
+      <h1 style = "color: #952318; font-family: Montserrat, sans-serif" id="definition-word"></h1>
       <p id="definition-text"></p>
       <div id="definitionsContainer"></div>
-      <button style="font-family: Montserrat, sans-serif" id = "storeButton">Store This Word!</button>
       <hr />
-      <textarea style = "font-family: Montserrat, sans-serf" id = "customdef"></textarea>
+      <button style="font-family: Montserrat, sans-serif" id = "storeButton">Store This Word!</button>
+      <p></p>
+      <textarea placeholder = "Type in here the definition, alongside any notes you want associated with this word!" style = "width: 300px; height: 100px; font-family: Montserrat, sans-serf" id = "customdef"></textarea>
       <hr />
       <h2>Stored Words</h2>
       <ul id="storedWordsList"></ul>

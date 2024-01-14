@@ -15,5 +15,12 @@
   "action": {
     "default_icon": "wordbank_logo7.png"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ],
+
   "permissions": ["sidePanel", "contextMenus", "tabs", "storage"]
 }
