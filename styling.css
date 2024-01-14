@@ -1,0 +1,25 @@
+.flStyle {
+  font-family: 'Montserrat', sans-serif;
+  color: #6d6d6d;
+}
+
+textarea {
+  border: 2px solid #902020;
+}
+
+hr {
+  border-top: 1px solid #902020;
+}
+
+button {
+  border: 2px solid #902020;
+  background-color:#902020;
+  color: white;
+  transition: 0.3s;
+}
+
+button:hover {
+  border: 2px solid #561212;
+  background-color: #561212;
+  cursor: pointer;
+}

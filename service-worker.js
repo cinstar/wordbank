@@ -56,3 +56,29 @@ chrome.runtime.onMessage.addListener((message) => {
   }
 });
 
+let storedWords = [];
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'storedWords') {
+    storedWords = message.words;
+    console.log("Words array updated: ", storedWords);
+  }
+});
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'checkWords') {
+    checkWords(message.pageContent);
+  }
+});
+
+function checkWords(pageContent) {
+  storedWords.forEach((word) => {
+    if (pageContent.includes(word.word)) {
+      // Display a popup or perform your desired action
+      alert(`Found stored word: ${word.word}`);
+    }
+  });
+}
+
+
+
