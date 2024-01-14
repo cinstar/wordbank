@@ -61,15 +61,18 @@ def get_definitions(user_word, verbose = 0):
                 if cleaned_def != '':
                     word_defs.append(cleaned_def)
     else:
-        print(res_json[0])
+        # print(res_json[0])
+        word_defs = [f"No definition listed, stems: {res_json[0]['meta']['stems']}"]
     return word_defs
 
 # testing: 
 # print(get_definitions('run', verbose = 0))
 
 # save file to json
-res = get_definitions('run', verbose = 0)
-with open ("run_definition.json", "w") as outfile:
+# replace "run" with the word you're looking for
+myword = "walked"
+res = get_definitions(myword, verbose = 0)
+with open (f"{myword}_definition.json", "w") as outfile:
     json.dump(res, outfile)
 
 # definition one 
