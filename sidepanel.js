@@ -12,57 +12,68 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-let userWord = 'filler_word';
-let userDefinition = 'filler_definition';
-let pageURL = ''; 
-
 chrome.runtime.sendMessage('sidePanelIsOpen', showDef);
-
+var userWord; 
+var userDefinition = "Error: You did not save a definition for this word";
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'define-word') {
+    showDef(info.selectionText);
+  }
+});
 function showDef(text, definition) {
   document.querySelector('#definition-word').textContent = text;
+  userWord = text;
   const API_KEY = "667c02e3-50bf-4233-a954-b33d1264799a";
-  const wordToLookup = text; // Replace with the word you want to look up
+const wordToLookup = text; // Replace with the word you want to look up
 
-  // API endpoint
-  const apiUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${wordToLookup}?key=${API_KEY}`;
+// API endpoint
+const apiUrl = `https://www.dictionaryapi.com/api/v3/references/collegiate/json/${wordToLookup}?key=${API_KEY}`;
 
-  // Fetch data from the Webster Dictionary API
-  fetch(apiUrl)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Process the API response (data) here
-      console.log(data);
-      
-      // const container = document.getElementById("definitionsContainer");
-
-      // const [tab] = await chrome.tabs.query({active: true, lastFocusedWindow: true});
-
-      if (Array.isArray(data) && data.length > 0) {
-        const firstDefinition = data[0].shortdef[0];
-        // console.log("Sending word: ", wordToLookup);
-        // console.log("Sending definition: ", firstDefinition);
-        // await chrome.tabs.sendMessage(tab.id, { type: 'wordDefinition', word: wordToLookup, definition: firstDefinition});
-
-        userWord = wordToLookup;
-        userDefinition = firstDefinition;
-
-        document.querySelector('#definition-text').textContent = firstDefinition;
-      } else {
-        console.log("Word not found in the dictionary.");
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+// Fetch data from the Webster Dictionary API
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    // Process the API response (data) here
+    console.log(data);
     
-};
+    // Example: Extracting definition from the response
+    const container = document.getElementById('definitionsContainer');
 
-// Get the button element by its ID
+    if (Array.isArray(data) && data.length > 0) {
+      console.log(data.length, " is the number of definitions of");
+      for(var i = 0; i < data.length; i++) {
+        const paragraph = document.createElement('p');
+        const flOfEach = document.createElement('p');
+
+        const firstDefinition = data[i].shortdef ? data[i].shortdef[0] : "N/A";
+        const partOfSpeech = data[i].fl ? data[i].fl : "N/A";
+
+        console.log(`Part of speech: ${partOfSpeech}`);
+
+        flOfEach.textContent = `${partOfSpeech}`;
+        flOfEach.className = 'flStyle';
+
+        container.appendChild(flOfEach);
+
+        paragraph.textContent = `${i+1}. \n Definition - ${firstDefinition}`;
+        container.appendChild(paragraph);
+      }
+      console.log("this is our def", userDefinition);
+    } else {
+      console.log("Word not found in the dictionary.");
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+   //should equal the Merriam Webster's definition given by the API
+}
+
 var storeButton = document.getElementById("storeButton");
 var customDefStoring = document.getElementById("customdef").value;
 // FIXME: right now the custom definition area doesn't work. it's not getting read here
@@ -73,13 +84,15 @@ var deleteButton = document.getElementById("deleteButton");
 storeButton.addEventListener("click", function() {
     storeButton.classList.toggle("clicked");
     storeButton.innerText = "Saved!";
-
+    userDefinition = document.getElementById("customdef").value;
     const currentDate = new Date().toLocaleString();
 
     // Storage operation after the button click
     chrome.storage.sync.get({ words: [] }, function (result) {
         const words = result.words;
-
+        if(userDefinition === "") {
+          userDefinition = "Error: You never put a definition for this word";
+        }
         // add words to storage
         words.push({
             word: userWord,
@@ -99,9 +112,21 @@ storeButton.addEventListener("click", function() {
     });
 });
 
+deleteButton.addEventListener("click", function() {
+  storeButton.classList.toggle("clicked");
+  storeButton.innerText = "Saved!";
+
+  // Storage operation after the button click
+  chrome.storage.sync.set({ words: [] }, function () {
+    // Clear the list by setting the innerHTML to an empty string
+    storedWordsList.innerHTML = '';
+
+    console.log("All words deleted successfully!");
+  });
+});
+
 function displayStoredWords() {
   const storedWordsList = document.getElementById('storedWordsList');
-
   // Fetch stored words from storage
   chrome.storage.sync.get({ words: [] }, function (result) {
     const words = result.words;
@@ -116,16 +141,4 @@ function displayStoredWords() {
       storedWordsList.appendChild(listItem);
     });
   });
-}
-
-// Add a click event listener to the delete button
-deleteButton.addEventListener("click", function () {
-  deleteSelectedWords();
-});
-
-// Function to delete selected words
-function deleteSelectedWords() {
-  // Clear all 
-  chrome.storage.sync.set({ words: [] });
-  console.log("All words deleted!");
 }

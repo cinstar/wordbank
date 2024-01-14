@@ -1,22 +1,25 @@
 <html>
   <head>
-    <title>Dictionary Side Panel</title>
+    <title>WordBank Side Panel</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Tangerine|Montserrat|Droid+Sans">
+    <link rel="stylesheet" type="text/css" href="styling.css">
   </head>
-  <body>
-    <h1>Dictionary</h1>
+  <body style="font-family: Montserrat, sans-serif">
+    <h1>WordBank</h1>
     <hr />
-    <p id="select-a-word">Welcome to WordBank! Where you can store all your fanciest words \(^v^)/</p>
+    <p id="select-a-word">Welcome to WordBank! Where you can store all your fanciest words</p>
     <div>
-      <h2 id="definition-word"></h2>
-      <div id="definitionsContainer"></div>
+      <h1 style = "font-family: Montserrat, sans-serif" id="definition-word"></h1>
       <p id="definition-text"></p>
-      <textarea id = "customdef" placeholder = "Insert a custom definition here"></textarea>
-      <button id = "storeButton">Store This Word!</button>
+      <div id="definitionsContainer"></div>
+      <button style="font-family: Montserrat, sans-serif" id = "storeButton">Store This Word!</button>
+      <hr />
+      <textarea style = "font-family: Montserrat, sans-serf" id = "customdef"></textarea>
       <hr />
       <h2>Stored Words</h2>
       <ul id="storedWordsList"></ul>
-      <button id="deleteButton">Delete All Words?</button>
-      <link rel="stylesheet" type="text/css" href="styles.css">
+      <button style="font-family: Montserrat, sans-serif" id="deleteButton">Delete All Words?</button>
     </div>
     <script src = "sidepanel.js"></script>
   </body>

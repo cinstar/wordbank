@@ -1,8 +1,8 @@
 {
-  "name": "Word Bank",
+  "name": "WordBank side panel",
   "version": "0.1",
   "manifest_version": 3,
-  "description": "Place to store all your favorite words!",
+  "description": "Provides definitions in the side panel.",
   "background": {
     "service_worker": "service-worker.js"
   },
