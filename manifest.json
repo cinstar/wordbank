@@ -1,8 +1,8 @@
 {
-  "name": "Dictionary side panel",
+  "name": "Word Bank",
   "version": "0.1",
   "manifest_version": 3,
-  "description": "Provides definitions in the side panel.",
+  "description": "Stores all your fanciest words",
   "background": {
     "service_worker": "service-worker.js"
   },
