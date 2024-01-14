@@ -1,5 +1,5 @@
 {
-  "name": "Dictionary side panel",
+  "name": "WordBank side panel",
   "version": "0.1",
   "manifest_version": 3,
   "description": "Provides definitions in the side panel.",
@@ -13,5 +13,5 @@
   "side_panel": {
     "default_path": "sidepanel.html"
   },
-  "permissions": ["sidePanel", "contextMenus", "tabs"]
+  "permissions": ["sidePanel", "contextMenus", "tabs", "storage"]
 }
