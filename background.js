@@ -1,4 +1,4 @@
-chrome.runtime.onInstalled.addListener(() => {
+/* chrome.runtime.onInstalled.addListener(() => {
     chrome.action.setBadgeText({
       text: 'OFF'
     });
@@ -36,4 +36,8 @@ chrome.runtime.onInstalled.addListener(() => {
       }
     }
   });
-  
+   */
+
+chrome.browserAction.onClicked.addListener(function(tab) {
+  chrome.tabs.executeScript(tab.id, { file: 'content.js' });
+});

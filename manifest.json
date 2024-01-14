@@ -1,19 +1,19 @@
 {
     "manifest_version": 3,
-    "name": "sidebar",
-    "description": "Enables sidebar on a Chrome page. WIP.",
+    "name": "Wordbank It",
+    "description": "",
     "version": "1.0",
-    "icons": {
-        "16": "images/icon-16.png",
-        "32": "images/icon-32.png",
-        "48": "images/icon-48.png",
-        "128": "images/icon-128.png"
-    },
     "background": {
         "service_worker": "background.js"
     },
     "action": {
         "default_icon": "wordbank_logo7.png"
     },
-    "permissions": ["activeTab", "scripting"]
+    "permissions": ["activeTab", "scripting", "storage", "unlimitedStorage"],
+    "content_scripts": [{
+        "css": ["styles.css"],
+        "js": ["content.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "default_popup": "popup.js"
 }
