@@ -2,7 +2,7 @@
   "name": "Word Bank",
   "version": "0.1",
   "manifest_version": 3,
-  "description": "Stores all your fanciest words",
+  "description": "Place to store all your favorite words!",
   "background": {
     "service_worker": "service-worker.js"
   },
@@ -15,10 +15,5 @@
   "action": {
     "default_icon": "wordbank_logo7.png"
   },
-  "permissions": ["sidePanel", "contextMenus", "tabs", "storage"],
-  "content_scripts": [{
-    "css": ["styles.css"],
-    "js": ["content.js", "sidepanel.js", "highlight.js"],
-    "matches": ["<all_urls>"]
-  }]
+  "permissions": ["sidePanel", "contextMenus", "tabs", "storage"]
 }

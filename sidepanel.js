@@ -65,6 +65,9 @@ function showDef(text, definition) {
 // Get the button element by its ID
 var storeButton = document.getElementById("storeButton");
 var customDefStoring = document.getElementById("customdef").value;
+// FIXME: right now the custom definition area doesn't work. it's not getting read here
+// console.log("Value of custom definition:", customDefStoring);
+var deleteButton = document.getElementById("deleteButton");
 
 // Add a click event listener to the button
 storeButton.addEventListener("click", function() {
@@ -113,4 +116,16 @@ function displayStoredWords() {
       storedWordsList.appendChild(listItem);
     });
   });
+}
+
+// Add a click event listener to the delete button
+deleteButton.addEventListener("click", function () {
+  deleteSelectedWords();
+});
+
+// Function to delete selected words
+function deleteSelectedWords() {
+  // Clear all 
+  chrome.storage.sync.set({ words: [] });
+  console.log("All words deleted!");
 }
