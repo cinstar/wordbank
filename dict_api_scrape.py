@@ -25,39 +25,52 @@ def get_definitions(user_word, verbose = 0):
         return "DictionaryAPI ran into an error. Try again"
 
     # iterate through the definitions by iterating through the items in the list
-    # res_json[0]["def"][0]["sseq"]
+    # if verbose == 1:
+    #     print(res_json[0]["def"][0]["sseq"])
 
     word_defs = []
 
-    for definition in res_json[0]["def"][0]["sseq"]:
-        # print(i[0][1])
-        found_nested = False
-        # for the time when they have several subdefinitions under a definition. 
-        # see "run"
-        while type(definition[0][1]) != dict:
-            extra_defs = (definition[0][1])
-            for nested_def in extra_defs:
+    # print(res_json[0])
+
+    if "def" in res_json[0]:
+        for definition in res_json[0]["def"][0]["sseq"]:
+            if verbose == 1:
+                print(definition)
+            # print(i[0][1])
+            found_nested = False
+            # for the time when they have several subdefinitions under a definition. 
+            # see "run"
+            while type(definition[0][1]) != dict:
+                extra_defs = (definition[0][1])
+                for nested_def in extra_defs:
+                    if verbose == 1:
+                        print(nested_def[1]['dt'][0][1])
+                    cleaned_def = remove_patterns(nested_def[1]['dt'][0][1])
+                    cleaned_def = cleaned_def.strip(' ,')
+                    if cleaned_def != '':
+                        word_defs.append(cleaned_def)
+                found_nested = True
+                break
+            if found_nested == True:
+                continue
+            if 'dt' in definition[0][1]:
                 if verbose == 1:
-                    print(nested_def[1]['dt'][0][1])
-                cleaned_def = remove_patterns(nested_def[1]['dt'][0][1])
+                    print(definition[0][1]['dt'][0][1])
+                cleaned_def = remove_patterns(definition[0][1]['dt'][0][1])
                 cleaned_def = cleaned_def.strip(' ,')
                 if cleaned_def != '':
                     word_defs.append(cleaned_def)
-            found_nested = True
-            break
-        if found_nested == True:
-            continue
-        if verbose == 1:
-            print(definition[0][1]['dt'][0][1])
-        cleaned_def = remove_patterns(definition[0][1]['dt'][0][1])
-        cleaned_def = cleaned_def.strip(' ,')
-        if cleaned_def != '':
-            word_defs.append(cleaned_def)
-
+    else:
+        print(res_json[0])
     return word_defs
 
 # testing: 
-# print(get_definitions('run'))
+# print(get_definitions('run', verbose = 0))
+
+# save file to json
+res = get_definitions('run', verbose = 0)
+with open ("run_definition.json", "w") as outfile:
+    json.dump(res, outfile)
 
 # definition one 
 # print(res_json[0]["def"][0]["sseq"][0][0][1]['dt'][0][1])
