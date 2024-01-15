@@ -71,6 +71,8 @@ fetch(apiUrl)
   .catch(error => {
     console.error('Error:', error);
   });
+
+  displayStoredWords();
    //should equal the Merriam Webster's definition given by the API
 }
 
@@ -123,7 +125,7 @@ deleteButton.addEventListener("click", function() {
     storedWordsList.innerHTML = '';
 
     console.log("All words deleted successfully!");
-    chrome.runtime.sendMessage({ type: 'storedWords', words: words });
+    chrome.runtime.sendMessage({ type: 'storedWords', words: storedWordsList });
   });
 });
 
